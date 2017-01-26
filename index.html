@@ -62,11 +62,11 @@
 			this.draw = function()
 			{
 				this.y -= this.speed; // 1s = 4ms/frame
-				// this.alpha += (Math.random()-Math.random())/99;
-				// if (this.alpha < 0)
-				// {
-				// 	this.alpha = 0;
-				// }
+				this.alpha += (Math.random()-Math.random())/99;
+				if (this.alpha < 0)
+				{
+					this.alpha = 0;
+				}
 				this.color = "rgba(255, 51, 204," + this.alpha.toString() + ")";
 				ctx.fillStyle = this.color;
 				ctx.beginPath();
