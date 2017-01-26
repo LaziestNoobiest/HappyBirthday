@@ -46,10 +46,8 @@
 		}
 
 		// objects
-		function drawingBubbles()
-		{
-			ctx.shadowColor = "rgb(255, 51, 204)";
-		}
+		// ctx.shadowColor = "rgb(255, 51, 204)";
+		// ctx.shadowBlur = (mCanvas.width > mCanvas.height)? mCanvas.height/9 : mCanvas.width/9;	// shadows too slow on some browsers
 		function bubble()
 		{
 			this.set = function()
@@ -64,13 +62,12 @@
 			this.draw = function()
 			{
 				this.y -= this.speed; // 1s = 4ms/frame
-				this.alpha += (Math.random()-Math.random())/99;
-				if (this.alpha < 0)
-				{
-					this.alpha = 0;
-				}
+				// this.alpha += (Math.random()-Math.random())/99;
+				// if (this.alpha < 0)
+				// {
+				// 	this.alpha = 0;
+				// }
 				this.color = "rgba(255, 51, 204," + this.alpha.toString() + ")";
-				ctx.shadowBlur = this.rad;
 				ctx.fillStyle = this.color;
 				ctx.beginPath();
 				ctx.arc(this.x, this.y, this.rad, 0, 2*Math.PI);
@@ -84,13 +81,13 @@
 		ctx.textAlign = "center";
 		function word()
 		{
+			this.fontsize = mCanvas.height/9;
+			this.x = mCanvas.width/2;
 			this.set = function()
 			{
-				this.x = mCanvas.width/2;
 				this.y = 12*mCanvas.height/10;
 				this.index = Math.round(sample(0,happiness.length-1));
 				this.happy = happiness[this.index];
-				this.fontsize = mCanvas.height/9;
 				ctx.font = this.fontsize.toString() + "px Comic Sans MS";
 				if (this.happy == fontsizes[this.index])
 				{
@@ -114,11 +111,8 @@
 			}
 			this.draw = function()
 			{
-				this.color = "pink";
 				this.y -= mCanvas.height/490;
-				ctx.fillStyle = this.color;
-				ctx.shadowColor = this.color;
-				ctx.shadowBlur = mCanvas.height/16;
+				ctx.fillStyle = "pink";
 				ctx.fillText(this.happy, this.x, this.y);
 				if (this.y < -(mCanvas.height/10))
 				{
@@ -133,7 +127,7 @@
 
 		// drawing
 		var bubbles = []; var words = new word();
-		var numBubbles = (mCanvas.width > mCanvas.height)? Math.floor(mCanvas.width/27):Math.ceil(mCanvas.height/27);
+		var numBubbles = (mCanvas.width > mCanvas.height)? Math.floor(mCanvas.width/36):Math.ceil(mCanvas.height/36);
 		for (var i = 0; i < numBubbles; ++i)
 		{
 			bubbles.push(new bubble());
@@ -143,7 +137,6 @@
 		function drawing()
 		{
 			clear();
-			drawingBubbles();
 			for (var i = 0; i < bubbles.length; ++i)
 			{
 				bubbles[i].draw();
