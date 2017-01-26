@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Happy Birthday</title>
+	<style type="text/css">
+		body
+		{
+			padding: 0;
+			border: 0;
+			margin: 0;
+			text-align: center;
+			color: white;
+			background: black;
+		}
+		canvas
+		{
+			display: block;
+			width: 100vw;
+			height: 100vh;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="c"></canvas>
+	<script type="text/javascript">
+		// statics
+		function cloneArray(a)
+		{
+			return a.slice(0);
+		}
+		var happiness = [								// add phrases here
+		"Happy Birthday!",
+		"Remember when we took care of drunk people?",
+		"Jan 26, 2017"
+		];
+		var fontsizes = cloneArray(happiness);
+		var mCanvas = document.getElementById("c");
+		mCanvas.width = screen.width;
+		mCanvas.height = screen.height;
+		var ctx = mCanvas.getContext("2d");
+		function clear()
+		{
+			ctx.clearRect(0,0,mCanvas.width,mCanvas.height);
+		}
+
+		// objects
+		function drawingBubbles()
+		{
+			ctx.shadowColor = "rgb(255, 51, 204)";
+		}
+		function bubble()
+		{
+			this.set = function()
+			{
+				this.x = sample(0, mCanvas.width);
+				this.y = mCanvas.height + sample(0, mCanvas.height);
+				this.rad = sample(mCanvas.height/24, mCanvas.height/9);
+				this.alpha = Math.random()/3;
+				this.speed = mCanvas.height/(250 + (Math.random()-Math.random())*36);
+				this.done = false;
+			}
+			this.draw = function()
+			{
+				this.y -= this.speed; // 1s = 4ms/frame
+				this.alpha += (Math.random()-Math.random())/99;
+				if (this.alpha < 0)
+				{
+					this.alpha = 0;
+				}
+				this.color = "rgba(255, 51, 204," + this.alpha.toString() + ")";
+				ctx.shadowBlur = this.rad;
+				ctx.fillStyle = this.color;
+				ctx.beginPath();
+				ctx.arc(this.x, this.y, this.rad, 0, 2*Math.PI);
+				ctx.fill();
+				if (this.y <= -mCanvas.height/9)
+				{
+					this.done = true;
+				}
+			}
+		}
+		ctx.textAlign = "center";
+		function word()
+		{
+			this.set = function()
+			{
+				this.x = mCanvas.width/2;
+				this.y = 12*mCanvas.height/10;
+				this.index = Math.round(sample(0,happiness.length-1));
+				this.happy = happiness[this.index];
+				this.fontsize = mCanvas.height/9;
+				ctx.font = this.fontsize.toString() + "px Comic Sans MS";
+				if (this.happy == fontsizes[this.index])
+				{
+					while (ctx.measureText(this.happy).width >= 0.75*mCanvas.width)
+					{
+						this.fontsize--;
+						ctx.font = this.fontsize.toString() + "px Comic Sans MS";
+					}
+					while (ctx.measureText(this.happy).width < 0.75*mCanvas.width)
+					{
+						this.fontsize++;
+						ctx.font = this.fontsize.toString() + "px Comic Sans MS";
+					}
+					fontsizes[this.index] = this.fontsize;
+				}
+				else
+				{
+					ctx.font = fontsizes[this.index].toString() + "px Comic Sans MS";
+				}
+				this.done = false;
+			}
+			this.draw = function()
+			{
+				this.color = "pink";
+				this.y -= mCanvas.height/490;
+				ctx.fillStyle = this.color;
+				ctx.shadowColor = this.color;
+				ctx.shadowBlur = mCanvas.height/16;
+				ctx.fillText(this.happy, this.x, this.y);
+				if (this.y < -(mCanvas.height/10))
+				{
+					this.done = true;
+				}
+			}
+		}
+		function sample(a, b)
+		{
+			return Math.random()*(b-a)+a;
+		}
+
+		// drawing
+		var bubbles = []; var words = new word();
+		for (var i = 0; i < 50; ++i)
+		{
+			bubbles.push(new bubble());
+			bubbles[i].set();
+		}
+		words.set();
+		function drawing()
+		{
+			clear();
+			drawingBubbles();
+			for (var i = 0; i < bubbles.length; ++i)
+			{
+				bubbles[i].draw();
+				if (bubbles[i].done)
+				{
+					bubbles[i].set();
+				}
+			}
+			words.draw();
+			if (words.done)
+			{
+				words.set();
+			}
+		}
+		var interval = setInterval(drawing, 12);
+	</script>
+</body>
+</html>
