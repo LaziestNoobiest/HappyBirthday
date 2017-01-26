@@ -31,7 +31,9 @@
 		var happiness = [								// add phrases here
 		"Happy Birthday!",
 		"Remember when we took care of drunk people?",
-		"Jan 26, 2017"
+		"Jan 26, 2017",
+		"Hell yeah" // partygetnaked
+		"I admire your honesty." // elsword123
 		];
 		var fontsizes = cloneArray(happiness);
 		var mCanvas = document.getElementById("c");
@@ -131,7 +133,8 @@
 
 		// drawing
 		var bubbles = []; var words = new word();
-		for (var i = 0; i < 36; ++i)
+		var numBubbles = (mCanvas.width > mCanvas.height)? Math.floor(mCanvas.width/27):Math.ceil(mCanvas.height/27);
+		for (var i = 0; i < numBubbles; ++i)
 		{
 			bubbles.push(new bubble());
 			bubbles[i].set();
