@@ -22,6 +22,10 @@
 	</style>
 </head>
 <body>
+	<audio autoplay="true" loop="true">
+		<source src="Moonlight.wav" type="audio/wav">
+		<source src="Moonlight.ogg" type="audio/ogg">
+	</audio>
 	<canvas id="c"></canvas>
 	<script type="text/javascript">
 		// statics
@@ -48,7 +52,8 @@
 		"Jan 27, 2017 - 1:20 AM",
 		"I'd rather you not.",
 		"Suddenly, you're scared...",
-		"... but your Big is here."
+		"... but your Big is here.",
+		"Pancakes make everything better."
 		];
 		var fontsizes = cloneArray(happiness);
 		var mCanvas = document.getElementById("c");
@@ -62,7 +67,7 @@
 
 		// objects
 		// ctx.shadowColor = "rgb(255, 51, 204)";
-		// ctx.shadowBlur = (mCanvas.width > mCanvas.height)? mCanvas.height/9 : mCanvas.width/9;	// shadows too slow on some browsers
+		// ctx.shadowBlur = (mCanvas.width > mCanvas.height)? mCanvas.height/9 : mCanvas.width/9;	// shadows too slow on most browsers
 		function bubble()
 		{
 			this.set = function()
