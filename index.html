@@ -32,8 +32,16 @@
 		"Happy Birthday!",
 		"Remember when we took care of drunk people?",
 		"Jan 26, 2017",
-		"Hell yeah", // partygetnaked
-		"I admire your honesty." // elsword123
+		"Hell yeah",
+		"I admire your honesty.",
+		"Same shoe size",
+		"How long are you keeping the turtle?",
+		"Your laugh is real",
+		"Pretty pink lights",
+		"I wish I were a cow",
+		"Small, like me",
+		"Candy?",
+		"Eww, whale breath."
 		];
 		var fontsizes = cloneArray(happiness);
 		var mCanvas = document.getElementById("c");
@@ -55,7 +63,7 @@
 				this.x = sample(0, mCanvas.width);
 				this.y = mCanvas.height + sample(0, mCanvas.height);
 				this.rad = sample(mCanvas.height/24, mCanvas.height/9);
-				this.alpha = Math.random()/3;
+				this.alpha = Math.random()*0.45;
 				this.speed = mCanvas.height/(250 + (Math.random()-Math.random())*36);
 				this.done = false;
 			}
@@ -93,12 +101,12 @@
 				{
 					while (ctx.measureText(this.happy).width >= 0.75*mCanvas.width)
 					{
-						this.fontsize--;
+						this.fontsize-=4;
 						ctx.font = this.fontsize.toString() + "px Comic Sans MS";
 					}
 					while (ctx.measureText(this.happy).width < 0.75*mCanvas.width)
 					{
-						this.fontsize++;
+						this.fontsize+=4;
 						ctx.font = this.fontsize.toString() + "px Comic Sans MS";
 					}
 					fontsizes[this.index] = this.fontsize;
