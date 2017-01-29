@@ -78,6 +78,7 @@
 				this.alpha = Math.random()*0.45;
 				this.speed = mCanvas.height/(250 + (Math.random()-Math.random())*36);
 				this.done = false;
+				this.limit = mCanvas.height + this.rad;
 			}
 			this.draw = function()
 			{
@@ -87,14 +88,17 @@
 				{
 					this.alpha = 0;
 				}
-				this.color = "rgba(255, 51, 204," + this.alpha.toString() + ")";
-				ctx.fillStyle = this.color;
-				ctx.beginPath();
-				ctx.arc(this.x, this.y, this.rad, 0, 2*Math.PI);
-				ctx.fill();
-				if (this.y <= -mCanvas.height/9)
+				if (this.y <= -this.rad)
 				{
 					this.done = true;
+				}
+				else if (this.y <= this.limit)
+				{
+					this.color = "rgba(255, 51, 204," + this.alpha.toString() + ")";
+					ctx.fillStyle = this.color;
+					ctx.beginPath();
+					ctx.arc(this.x, this.y, this.rad, 0, 2*Math.PI);
+					ctx.fill();
 				}
 			}
 		}
@@ -127,16 +131,20 @@
 				{
 					ctx.font = fontsizes[this.index].toString() + "px Comic Sans MS";
 				}
+				this.limit = mCanvas.height + fontsizes[this.index];
 				this.done = false;
 			}
 			this.draw = function()
 			{
 				this.y -= mCanvas.height/490;
-				ctx.fillStyle = "pink";
-				ctx.fillText(this.happy, this.x, this.y);
-				if (this.y < -(mCanvas.height/10))
+				if (this.y < -fontsizes[this.index])
 				{
 					this.done = true;
+				}
+				else if (this.y <= this.limit)
+				{
+					ctx.fillStyle = "pink";
+					ctx.fillText(this.happy, this.x, this.y);
 				}
 			}
 		}
@@ -159,17 +167,17 @@
 			clear();
 			for (var i = 0; i < bubbles.length; ++i)
 			{
-				bubbles[i].draw();
 				if (bubbles[i].done)
 				{
 					bubbles[i].set();
 				}
+				bubbles[i].draw();
 			}
-			words.draw();
 			if (words.done)
 			{
 				words.set();
 			}
+			words.draw();
 		}
 		var interval = setInterval(drawing, 12);
 	</script>
